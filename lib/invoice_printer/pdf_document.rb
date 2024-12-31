@@ -49,6 +49,8 @@ module InvoicePrinter
       amount: 'Amount',
       subtotal: 'Subtotal',
       total: 'Total',
+      paid: 'Already paid',
+      total_to_pay: 'Total to pay',
       sublabels: {}
     }
 
@@ -821,10 +823,27 @@ module InvoicePrinter
         { content:  @document.tax3, align: :right }
       ] unless @document.tax3.empty?
 
-      items << [
-        { content: "\n#{@labels[:total]}:#{build_sublabel_for_total_table(:total)}", align: :left, font_style: :bold, size: 16 },
-        { content:  "\n#{@document.total}", align: :right, font_style: :bold, size: 16 }
-      ] unless @document.total.empty?
+      if @document.paid && @document.total_to_pay
+        items << [
+          { content: "#{@labels[:total]}:#{build_sublabel_for_total_table(:total)}", align: :left },
+          { content: @document.total, align: :right }
+        ] unless @document.total.empty?
+
+        items << [
+          { content: "#{@labels[:paid]}:#{build_sublabel_for_total_table(:paid)}", align: :left },
+          { content: "-#{@document.paid}", align: :right }
+        ]
+
+        items << [
+          { content: "\n#{@labels[:total_to_pay]}:#{build_sublabel_for_total_table(:total_to_pay)}", align: :left, font_style: :bold, size: 16 },
+          { content:  "\n#{@document.total_to_pay}", align: :right, font_style: :bold, size: 16 }
+        ]
+      else !@document.total.empty?
+        items << [
+          { content: "\n#{@labels[:total]}:#{build_sublabel_for_total_table(:total)}", align: :left, font_style: :bold, size: 16 },
+          { content:  "\n#{@document.total}", align: :right, font_style: :bold, size: 16 }
+        ]
+      end
 
       options = {
         cell_style: {

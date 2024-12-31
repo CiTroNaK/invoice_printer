@@ -54,6 +54,8 @@ module InvoicePrinter
                 :tax,
                 :tax2,
                 :tax3,
+                :paid,
+                :total_to_pay,
                 :total,
                 :bank_account_number,
                 :account_iban,
@@ -82,6 +84,8 @@ module InvoicePrinter
           tax: json['tax'],
           tax2: json['tax2'],
           tax3: json['tax3'],
+          paid: json['paid'],
+          total_to_pay: json['total_to_pay'],
           total: json['total'],
           bank_account_number: json['bank_account_number'],
           account_iban: json['account_iban'],
@@ -110,6 +114,8 @@ module InvoicePrinter
                    tax: nil,
                    tax2: nil,
                    tax3: nil,
+                   paid: nil,
+                   total_to_pay: nil,
                    total: nil,
                    bank_account_number: nil,
                    account_iban: nil,
@@ -135,6 +141,8 @@ module InvoicePrinter
       @tax2 = String(tax2)
       @tax3 = String(tax3)
       @total = String(total)
+      @paid = String(paid)
+      @total_to_pay = String(total_to_pay)
       @bank_account_number = String(bank_account_number)
       @account_iban = String(account_iban)
       @account_swift = String(account_swift)
@@ -164,6 +172,8 @@ module InvoicePrinter
         'tax': @tax,
         'tax2': @tax2,
         'tax3': @tax3,
+        'paid': @paid,
+        'total_to_pay': @total_to_pay,
         'total': @total,
         'bank_account_number': @bank_account_number,
         'account_iban': @account_iban,
